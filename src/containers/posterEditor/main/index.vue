@@ -1,5 +1,5 @@
 <template>
-  <div ref="main" class="poster-editor-main" @contextmenu.prevent="">
+  <div ref="main" class="poster-editor-main" @contextmenu.prevent=""> 
     <div ref="mainPanelScrollContent" class="main-panel-scroll-content">
       <div class="main-panel-contaienr">
         <main-panel ref="mainPanel" @openContextmenu="openContextmenu" />
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+
 import mainPanel from './mainPanel'
 import _throttle from 'lodash/throttle'
 import rulerComponent from './ruler'
@@ -34,7 +35,7 @@ import BScroll from '@better-scroll/core'
 import MouseWheel from '@better-scroll/mouse-wheel'
 import ScrollBar from '@better-scroll/scroll-bar'
 export default {
-  components: {
+  components: { 
     mainPanel,
     rulerComponent,
     bottomBar,

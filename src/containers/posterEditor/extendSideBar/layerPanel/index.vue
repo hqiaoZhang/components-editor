@@ -1,7 +1,7 @@
 <template>
   <div id="layer-panel" class="layer-panel poster-editor_deactivated-ignore">
     <div v-drag:#layer-panel class="header">
-      <div class="title">图层面板</div>
+      <!-- <div class="title">图层面板</div> -->
       <i class="el-icon-close" @click="close" />
     </div>
     <div class="content">
@@ -66,14 +66,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 .layer-panel {
-  width: 220px;
-  height: 460px;
-  background-color: #1d2024;
-  position: fixed;
+  width: 100%; 
+  // height: 460px;
+  // background-color: #1d2024;
+  // position: fixed;
   right: 252px;
   top: 60px;
-  box-shadow: 0 0 6px rgba($color: #000000, $alpha: 0.1);
-  color: #fff;
+  
+  // color: #fff;
   border-radius: 4px;
   display: flex;
   flex-direction: column;

@@ -1,22 +1,31 @@
 <template>
-  <div class="left-side">
-    <ul class="widget-list">
-      <li v-for="item in widgets" :key="item.type" @click="current = item">
-        <el-tooltip
-          class="widget-item"
-          :class="{ active: current.type === item.type }"
-          effect="dark"
-          :content="item.name"
-          placement="right"
-          transition="el-zoom-in-center"
-        >
-          <i class="iconfont" v-html="item.icon" />
-        </el-tooltip>
-      </li>
-    </ul>
-    <div v-if="current" class="widget-container">
-      <component :is="current.component" :key="current.component" :components="current.children" />
+  <div class="left_side">
+    <div class="tabs">
+      <span :class="{active:  activeName == 'components'}" @click="activeName = 'components'">组件</span>
+      <span :class="{active:  activeName == 'layers'}" @click="activeName = 'layers'">图层</span>
     </div>
+
+    <div class="layer_list" v-if="activeName == 'layers'">
+      <layer-panel/>
+    </div>
+    <div class="component_list" v-if="activeName == 'components'">
+      <ul class="widget_list" v-if="!current">
+        <li v-for="item in widgets" :key="item.type" class="widget_item" @click="current = item"> 
+          <i class="iconfont" v-html="item.icon" /> 
+          {{item.name}}
+        </li>
+      </ul> 
+
+       <div v-if="current" class="widget_container">
+          <p class="back"><i class="iconfont">&#xe60a;</i> {{current.name}}</p>
+          <div  v-for="item in componentsList" :key="item.type">
+            <p class="name"><i class="iconfont" v-html="item.icon"></i>{{item.name}}</p>
+            <component :is="'basics-widget'" :key="item.component" :components="item.children" />
+          </div>  
+          </div>
+    </div>
+ 
+   
   </div>
 </template>
 
@@ -24,17 +33,47 @@
 import { mapActions } from "poster/poster.vuex";
 import { BackgroundWidget } from "poster/widgetConstructor";
 import imageWidget from "./widgets/imageWidget";
+import layerPanel from 'poster/extendSideBar/layerPanel'
 import backgroundWidget from "./widgets/backgroundWidget";
 import textWidget from "./widgets/textWidget";
 import rectWidget from "./widgets/rectWidget";
 import layoutWidget from './widgets/layoutWidget'
 import carouselWidget from './widgets/carouselWidget'
+import basicsWidget from './widgets/basicsWidget'
 import pilotlampWidget from './widgets/pilotlampWidget'
 import commonWidget from './widgets/commonWidget'
-import widgets from './data'
+import componentsList from './data'
 
 export default {
+ 
+  data() {
+    return {
+      activeName: 'components', 
+      current: null,
+      widgets: [
+        {
+          name: '基础组件',
+          icon: '&#xe706;',
+          type: 'basics'
+        },{
+          name: '工业组件',
+          icon: '&#xe813;',
+          type: 'Industry'
+        },{
+          name: '可视化组件',
+          icon: '&#xe659;',
+          type: 'visual'
+        },{
+          name: '自定义',
+          icon: '&#xe693;',
+          type: 'custom'
+        }
+      ]
+    };
+  },
   components: {
+    layerPanel,
+    basicsWidget,
     imageWidget,
     backgroundWidget,
     textWidget,
@@ -44,11 +83,10 @@ export default {
     pilotlampWidget,
     commonWidget
   },
-  data() {
-    return {
-      current: null,
-      widgets: widgets
-    };
+  computed: {
+    componentsList() {
+      return componentsList[this.current.type]
+    }
   },
   methods: {
     ...mapActions(["addBackground"]),
@@ -63,43 +101,77 @@ export default {
     }
   },
   created() {
-    this.current = this.widgets[1];
+    // this.current = this.widgets[1];
     this.init();
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.left-side {
+.left_side{
   background-color: #fff;
   box-sizing: border-box;
-  border-right: 1px solid rgb(224, 224, 224);
+  border-right: 2px solid $bodyBg;
   display: flex;
-  .widget-list {
-    width: 40px;
-    height: 100%;
-    border-right: 1px solid rgb(224, 224, 224);
-    .widget-item {
-      display: block;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      text-align: center;
-      line-height: 40px;
+  width: 256px;
+ 
+  flex-direction: column;
+  .tabs {
+    padding: 0 16px;
+    height: 48px;
+    line-height: 48px;
+    margin-bottom: 2px;
+    border-bottom: 2px solid $bodyBg;
+    span {
+      padding-right: 26px;
       font-size: 16px;
-      transition: 0.2s;
-      border-radius: 2px;
-      /* color: #fff; */
-      &:hover,
+      cursor: pointer;
       &.active {
-        background-color: $colorTheme;
-        color: #fff;
+        color: $main_c1;
       }
     }
   }
-  .widget-container {
-    width: 200px;
-    height: 100%;
+  
+  .widget_list{
+    width: 100%;
+    height: 100%; 
+   
+    i {
+      font-size: 18px;
+      vertical-align: middle;
+      padding-right: 8px;
+    } 
+    .widget_item {
+      line-height: 40px;
+       padding: 0 16px;
+       color: #000;
+      &:hover {
+        cursor: pointer;
+        background: rgba(29, 132, 239, 0.1);
+        color: $main_c1;
+        i {
+           color: $main_c1;
+        }
+      }
+    }
+  }
+  .component_list,
+  .layer_list {
+    overflow: auto;
+  }
+  .widget_container {
+    padding: 16px 0; 
+    height: 100%; 
+    .back {
+      padding-left: 16px;
+    }
+    i {
+      padding-right: 8px;
+    }
+    .name {
+      padding: 16px;
+      color: #333;
+    }
   }
 }
 </style>

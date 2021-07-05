@@ -1,5 +1,6 @@
 <template>
   <div class="poster-editor" :class="{ 'init-loading': initLoading }">
+     <Header /> 
     <div class="base">
       <left-side />
       <main-component ref="main" />
@@ -15,6 +16,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from './poster.vuex'
+import Header from '@/components/header'
 import controlComponent from './control/index'
 import mainComponent from './main/index'
 import leftSide from './leftSide/index'
@@ -34,6 +36,7 @@ const SELECT_ALL_KEY = 65 // a
 
 export default {
   components: {
+    Header,
     controlComponent,
     mainComponent,
     leftSide,
@@ -186,8 +189,7 @@ export default {
 .poster-editor {
   width: 100%;
   min-width: 900px;
-  height: 100%;
-  background-color: #fff;
+  height: 100%; 
   position: fixed;
   &.init-loading {
     filter: blur(6px);
