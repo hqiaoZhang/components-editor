@@ -9,7 +9,7 @@
     <ruler-component />
     <bottom-bar />
     <!-- 功能栏 -->
-    <functional-bar />
+    <!-- <functional-bar /> -->
     <custom-contextmenu
       v-if="contextmenuVisible"
       v-clickoutside="closeContextmenu"
@@ -150,13 +150,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 .poster-editor-main {
-  background-color: #d6d6d6;
+  background-color: #e5e5e5;
   position: relative;
   overflow: hidden;
   // overflow-x: auto;
   .main-panel-scroll-content {
     width: 100%;
     height: 100%;
+    padding-left: 21px;
     cursor: grab;
   } 
   // 

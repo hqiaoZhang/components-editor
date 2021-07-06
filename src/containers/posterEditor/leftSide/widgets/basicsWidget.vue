@@ -12,13 +12,14 @@
 
 <script>
 import { mapActions } from 'poster/poster.vuex'
-import { DrawRectWidget, ImageWidget, CommonWidget } from 'poster/widgetConstructor'
+import { DrawRectWidget, ImageWidget, CommonWidget, LayoutWidget } from 'poster/widgetConstructor'
 import { validateImage } from '@/utils/imageHelpers'
 import { uploadActivityImgAssets } from '@/api/activity'
 
 export default { 
   props: {
     components: Array,
+    componentType: String
   },  
  
   methods: {
@@ -26,8 +27,12 @@ export default {
     handleAdd(item) { 
       let config = {
         ...item,
-        componentName: item.componentName ||  item.type + '-widget',
+        componentName: item.componentName ||  item.component ||  item.type + '-widget',
+        // componentName: this.componentType + '-widget',
         typeLabel: item.name
+      } 
+      if(this.componentType == 'layout') {
+        return this.addItem(new LayoutWidget(item)) 
       }
       switch(item.type) { 
         case 'rect':

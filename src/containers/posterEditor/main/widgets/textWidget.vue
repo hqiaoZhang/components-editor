@@ -23,21 +23,21 @@
       {{ text }}
     </div>
     <portal v-if="isActive" :to="$data.$controlTarget">
-      <text-control :key="item.id" :item="item" />
+      <common-control :key="item.id" :item="item" />
     </portal>
   </div>
 </template>
 
 <script>
-import { TextWidget } from 'poster/widgetConstructor'
+import { CommonWidget } from 'poster/widgetConstructor'
 import { clickoutside } from 'poster/poster.directives'
-import textControl from 'poster/control/widgets/textControl'
+import commonControl from 'poster/control/widgets/commonControl'
 import { mapState, mapActions } from 'poster/poster.vuex'
 
 export default {
-  components: { textControl },
+  components: { commonControl },
   directives: { clickoutside },
-  mixins: [TextWidget.widgetMixin()],
+  mixins: [CommonWidget.widgetMixin()],
   data() {
     return {
       isEditing: false

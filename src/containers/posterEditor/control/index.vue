@@ -1,8 +1,17 @@
 <template>
-  <div class="poster-editor-control poster-editor_deactivated-ignore">
-    <portal-target name="widgetControl" class="control-target" />
-    <!-- 多组件编辑 -->
-    <widget-composition-control />
+  <div class="poster_editor_control poster-editor_deactivated-ignore">
+    <div class="tabs">
+      <i class="iconfont">&#xe6c1;</i>
+      <span class="active">样式</span>
+      <span>事件</span>
+      <span>数据源</span>
+    </div>
+    <div class="alignment">
+       <!-- 多组件对齐编辑 -->
+       <widget-composition-control />
+    </div>
+    <portal-target name="widgetControl" class="control_target" />
+   
   </div>
 </template>
 
@@ -17,13 +26,23 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.poster-editor-control {
-  width: 100%;
+.poster_editor_control {
+  .tabs,
+  .alignment {
+    @include tabs;
+    display: flex;
+    justify-content: space-between;
+    i {
+      margin-right: 20px;
+    }
+  }
+  width: 288px;
   height: 100%;
+  background: #fff;
   position: relative;
-  .control-target {
+  .control_target {
     width: 100%;
-    height: 100%;
+    height: 84%;
     overflow-y: scroll;
   }
 }

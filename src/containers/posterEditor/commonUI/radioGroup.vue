@@ -10,7 +10,8 @@
         @click="select(item)"
       >
         <slot :name="item.value">
-          {{ item.label }}
+          <i class="iconfont" v-if="item.icon" v-html="item.icon"></i> 
+          <span v-else>{{ item.label }}</span>
         </slot>
       </li>
     </ul>
@@ -69,44 +70,16 @@ export default {
 .radio-group {
   width: 100%;
   ul {
-    width: 100%;
-    height: 28px;
+    width: 100%; 
     display: flex;
-    li {
-      width: 1px;
-      height: 100%;
-      box-sizing: border-box;
-      padding: 4px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex: 1;
-      font-size: 13px;
-      @include no-wrap;
-      border-color: #ccd5db;
-      border-style: solid;
-      border-top-width: 1px;
-      border-bottom-width: 1px;
-      border-left-width: 1px;
-      transition: 0.1s;
-      background-color: #fff;
-      user-select: none;
+    justify-content: space-between; 
+    li {  
+      i {
+        font-size: 22px;
+        color: #999;
+      } 
       cursor: pointer;
-      color: $colorText;
-      &:first-child {
-        border-radius: 4px 0 0 4px;
-      }
-      &:last-child {
-        border-radius: 0 4px 4px 0;
-        border-right-width: 1px;
-      }
-      &:hover{
-        background-color: $colorThemeL;
-      }
-      &.active {
-        background-color: $colorTheme;
-        color: #fff;
-      }
+      color: $colorText; 
     }
   }
 }

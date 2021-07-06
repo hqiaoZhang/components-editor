@@ -103,7 +103,7 @@ export default {
 }
 </script>
 
- <style lang="scss" >
+<style lang="scss" scoped>
  .layout-widget {
    width: 100%;
    height: 100%;
@@ -118,30 +118,27 @@ export default {
        border: 1px dashed rgba(0,0,0,.5);
      }
    }
- }
-//  .el-col,
-//  .el-row {
-//    height: 100%;
-//  }
-  .el-col {
-    border: 1px dashed rgba(0,0,0,.5);
-   &:last-child {
-     border-left: 0;
-   }
-   &.active {
-     border:  1px dashed #ccc !important;
-   }
-  
-   &.col-1 {
-     border-left: 0;
-     border-top: 0;
-     border-bottom: 0;
-   }
-    &.row-1 {
-      border-left: 0;
-      border-right: 0;
-      border-bottom: 0;
+     .el-col {
+        border: 1px dashed rgba(0,0,0,.5);
+      &:last-child {
+        border-left: 0;
+      }
+      &.active {
+        border:  1px dashed #ccc !important;
+      }
+      
+      &.col-1 {
+        border-left: 0;
+        border-top: 0;
+        border-bottom: 0;
+      }
+        &.row-1 {
+          border-left: 0;
+          border-right: 0;
+          border-bottom: 0;
+        }
     }
+ 
  }
  
 

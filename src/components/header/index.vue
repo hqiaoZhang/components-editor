@@ -7,7 +7,7 @@
     </div>
     <div class="project_name">大屏设计</div>
     <div class="opt_btns">
-       <i class="iconfont">&#xe6f1;</i>
+       <i class="iconfont" @click="savePage">&#xe6f1;</i>
        <i class="iconfont">&#xe61e;</i>
        <i>100%</i>
     </div>
@@ -15,8 +15,34 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'poster/poster.vuex'
 export default {
-
+  data() {
+    return {
+      savePageLoading: false
+    }
+  },
+  computed: {
+    ...mapState(['isUnsavedState', 'posterItems'])
+  },
+  methods: {
+    ...mapActions(['saveActivityPageConfig']),
+    closeEditor() {
+      this.$router.back()
+    },
+    savePage() {
+      if (this.savePageLoading) return
+      if (this.posterItems.length === 0) {
+        this.$message.error('当前画布中未添加任何元素，请添加后再提交')
+        return
+      }
+      this.savePageLoading = true
+         sessionStorage.setItem('posterItems', JSON.stringify(this.posterItems))
+      this.saveActivityPageConfig().finally(() => {
+        this.savePageLoading = false
+      })
+    }
+  }
 }
 </script>
 
@@ -48,6 +74,7 @@ export default {
         color: #666;
         margin-right: 18px;
         font-style: normal;
+        cursor: pointer;
         &:last-child {
           color: #999;
           font-size: 14px;

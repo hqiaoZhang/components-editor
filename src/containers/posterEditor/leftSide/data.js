@@ -8,8 +8,8 @@ export default  {
       children: [{
         name: '网格一',
         tips: '4宫格',
-        type: 'grid-4',
-        icon: '&#xe64d;'
+        type: 'grid-4', 
+        icon: '&#xe64d;',
       },{
         name: '网格二',
         tips: '9宫格',
@@ -25,7 +25,7 @@ export default  {
         type: 'row-1',
       },{
         name: '纵切线',
-        type: 'col-1'
+        type: 'col-1',
       }]
     },
     {

@@ -4,13 +4,13 @@
     <div class="base">
       <left-side />
       <main-component ref="main" />
-      <extend-side-bar />
+      <!-- <extend-side-bar /> -->
       <control-component />
     </div>
     <!-- 图层面板 -->
-    <transition name="el-zoom-in-top">
+    <!-- <transition name="el-zoom-in-top">
       <layer-panel v-show="layerPanelOpened" />
-    </transition>
+    </transition> -->
   </div>
 </template>
 
@@ -199,6 +199,7 @@ export default {
     height: 100%;
     position: relative;
     display: flex;
+    justify-content: space-between;
   }
   .left-side {
     height: 100%;

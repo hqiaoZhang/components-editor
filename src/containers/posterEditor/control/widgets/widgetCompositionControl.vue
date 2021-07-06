@@ -1,13 +1,21 @@
 <template>
-  <div v-if="activeItems.length > 1" class="widget-composition-control">
-    <setting-content>
-      <setting-item label="组件对齐">
-        <radio-group
+ <!-- v-if="activeItems.length > 1"  -->
+  <div class="widget-composition-control">
+    <el-row>
+      <el-col :span="10">
+         <radio-group
           :list="alignList"
           @change="changeCompositionPosition($event)"
         />
-      </setting-item>
-    </setting-content>
+      </el-col>
+      <el-col :span="10" class="fr">
+         <radio-group
+          :list="alignList"
+          @change="changeCompositionPosition($event)"
+        />
+      </el-col>
+    </el-row>
+
   </div>
 </template>
 
@@ -20,9 +28,9 @@ export default {
   data() {
     return {
       alignList: [
-        { label: '左对齐', value: 'alignLeft' },
-        { label: '居中', value: 'alignCenter' },
-        { label: '右对齐', value: 'alignRight' }
+        { label: '左对齐', value: 'alignLeft', icon: '&#xe6eb;' },
+        { label: '水平居中对齐', value: 'alignCenter',  icon: '&#xe6ea;' },
+        { label: '右对齐', value: 'alignRight',  icon: '&#xe6e9;' }
       ]
     }
   },
@@ -39,9 +47,6 @@ export default {
 .widget-composition-control {
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #fff;
+  
 }
 </style>

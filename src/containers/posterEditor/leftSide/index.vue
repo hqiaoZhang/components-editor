@@ -3,6 +3,7 @@
     <div class="tabs">
       <span :class="{active:  activeName == 'components'}" @click="activeName = 'components'">组件</span>
       <span :class="{active:  activeName == 'layers'}" @click="activeName = 'layers'">图层</span>
+       <i class="iconfont fr">&#xe6c1;</i>
     </div>
 
     <div class="layer_list" v-if="activeName == 'layers'">
@@ -17,10 +18,10 @@
       </ul> 
 
        <div v-if="current" class="widget_container">
-          <p class="back"><i class="iconfont">&#xe60a;</i> {{current.name}}</p>
+          <p class="back" @click="handleBack"><i class="iconfont">&#xe60a;</i> {{current.name}}</p>
           <div  v-for="item in componentsList" :key="item.type">
             <p class="name"><i class="iconfont" v-html="item.icon"></i>{{item.name}}</p>
-            <component :is="'basics-widget'" :key="item.component" :components="item.children" />
+            <component :is="'basics-widget'" :key="item.component" :components="item.children" :componentType="item.type" />
           </div>  
           </div>
     </div>
@@ -98,10 +99,13 @@ export default {
           lock: true
         })
       );
+    },
+    handleBack() {
+      this.current = null
     }
   },
   created() {
-    // this.current = this.widgets[1];
+    this.current = this.widgets[0];
     this.init();
   }
 };
@@ -117,19 +121,7 @@ export default {
  
   flex-direction: column;
   .tabs {
-    padding: 0 16px;
-    height: 48px;
-    line-height: 48px;
-    margin-bottom: 2px;
-    border-bottom: 2px solid $bodyBg;
-    span {
-      padding-right: 26px;
-      font-size: 16px;
-      cursor: pointer;
-      &.active {
-        color: $main_c1;
-      }
-    }
+    @include tabs; 
   }
   
   .widget_list{
@@ -164,6 +156,7 @@ export default {
     height: 100%; 
     .back {
       padding-left: 16px;
+      cursor: pointer;
     }
     i {
       padding-right: 8px;

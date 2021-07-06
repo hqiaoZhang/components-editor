@@ -44,10 +44,13 @@ export default class CommonWidget extends Widget {
           borderStyle: 'solid',
           lineHeight: '100%', // %
           letterSpacing: 0, // %
-          backgroundColor: '',
-          fontWeight: '',
+          backgroundColor: '', 
           fontStyle: '',
-          textDecoration: ''
+          textDecoration: '',
+          boxSizing: 'border-box',
+          opacity: 1,
+          fontFamily: '微软雅黑',
+          fontWeight: 'Regular',
         }
       }
     }, config)

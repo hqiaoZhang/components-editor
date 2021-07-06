@@ -66,16 +66,13 @@
   height: 32px !important;
   line-height: 32px;
   padding: 0 8px;
-  color: #092266;
+  color: #999;
 }
 .el-textarea__inner {
   padding: 8px;
   font-family: '微软雅黑';
 }
-.el-select .el-input .el-select__caret {
-  color: #092266;
-  font-size: 16px;
-}
+ 
 // .el-icon-arrow-up {
 //   height: 14px;
 // }
@@ -86,5 +83,8 @@
 .el-table th>.cell {
   color: #1A1A1A;
   // text-align: left;
+}
+.el-select-dropdown__item {
+  font-size: 12px;
 }
  

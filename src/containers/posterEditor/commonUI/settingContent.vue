@@ -7,11 +7,10 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-.setting-content {
-  background-color: rgb(236, 238, 240);
+.setting-content { 
   box-sizing: border-box;
-  padding: 10px 20px;
-  font-size: 13px;
-  color: #303133;
+  padding: 0 16px;
+  color: #999;
+  font-size: 12px;
 }
 </style>
