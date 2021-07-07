@@ -7,8 +7,8 @@
     </div>
     <div class="project_name">大屏设计</div>
     <div class="opt_btns">
-       <i class="iconfont" @click="savePage">&#xe6f1;</i>
-       <i class="iconfont">&#xe61e;</i>
+       <i class="iconfont" @click="handleSavePage">&#xe6f1;</i>
+       <i class="iconfont" @click="handlePreview">&#xe61e;</i>
        <i>100%</i>
     </div>
   </div>
@@ -30,7 +30,10 @@ export default {
     closeEditor() {
       this.$router.back()
     },
-    savePage() {
+    handlePreview() {
+      this.$router.push('/view')
+    },
+    handleSavePage() {
       if (this.savePageLoading) return
       if (this.posterItems.length === 0) {
         this.$message.error('当前画布中未添加任何元素，请添加后再提交')

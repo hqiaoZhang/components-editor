@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { RectWidget } from 'poster/widgetConstructor'
+import { CommonWidget } from 'poster/widgetConstructor'
 import { clickoutside } from 'poster/poster.directives'
 // import textControl from 'poster/control/widgets/textControl'
 import { mapState, mapActions } from 'poster/poster.vuex'
@@ -30,7 +30,7 @@ export default {
       }
     }
   },
-  // mixins: [RectWidget.widgetMixin({ openContextmenu: false })],
+  // mixins: [CommonWidget.widgetMixin({ openContextmenu: false })],
   data() {
     return {
       dragging: false,
@@ -97,9 +97,14 @@ export default {
         left: parseInt(this.draggingRectStyle.left)
       }
       this.draggingRectStyle = null
-      this.removeSelf()
+      this.removeSelf()  
+      console.log(this.item)
       this.addItem(
-        new RectWidget({
+        new CommonWidget({ 
+          type: 'rect',
+          typeLabel: '矩形',
+          componentName: 'rect-widget',
+          wState: this.item.wState,
           dragInfo: {
             w: Math.max(50, rectInfo.width),
             h: Math.max(50, rectInfo.height),

@@ -4,7 +4,7 @@
  * @Email: 991034150@qq.com 
  * @Description: 走马灯
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2021-07-01 09:50:46
+ * @Last Modified time: 2021-07-07 14:33:56
  */
  <template>
    <el-carousel height="150px">
@@ -16,8 +16,8 @@
  
 <script>
 import { mapState } from 'poster/poster.vuex'
-import { PictureCarouselWidget } from 'poster/widgetConstructor'
-import layoutControl from 'poster/control/widgets/layoutControl' 
+import { CommonWidget } from 'poster/widgetConstructor'
+import commonControl from 'poster/control/widgets/commonControl' 
 export default { 
   data() {
     return {
@@ -27,9 +27,9 @@ export default {
   computed: {
     ...mapState(['canvasSize']),
   },
-  mixins: [PictureCarouselWidget.widgetMixin()],
+  mixins: [CommonWidget.widgetMixin()],
   components: {
-    layoutControl
+    commonControl
   },
   created() {  
     if (!this.item.isCopied) {

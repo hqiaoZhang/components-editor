@@ -22,9 +22,9 @@
     align-items: center;  
     flex: 1;
     ::v-deep {
-      .el-color-picker__icon.el-icon-arrow-down {
-        display: none;
-      }
+      // .el-color-picker__icon.el-icon-arrow-down {
+      //   display: none;
+      // }
       .el-select input {
         margin: 0;
         width: 82px;

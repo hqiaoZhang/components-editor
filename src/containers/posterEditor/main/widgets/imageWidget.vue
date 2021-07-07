@@ -4,26 +4,27 @@
       ref="image"
       :src="wState.src"
       class="qr-code"
-      style="width:100%;height:100%"
+      :style="wState.style"
       ondragstart="return false"
       @load="load"
     >
     <portal v-if="isActive" :to="$data.$controlTarget">
-      <image-control :key="item.id" :item="item" />
+      <common-control :key="item.id" :item="item" />
     </portal>
   </div>
 </template>
 
 <script>
-import imageControl from '../../control/widgets/imageControl'
-import { ImageWidget } from 'poster/widgetConstructor'
+import commonControl from 'poster/control/widgets/commonControl'
+ 
+import { CommonWidget } from 'poster/widgetConstructor'
 // import { mapGetters, mapActions } from 'poster/poster.vuex'
 export default {
-  components: { imageControl },
-  mixins: [ImageWidget.widgetMixin()],
+  components: { commonControl },
+  mixins: [CommonWidget.widgetMixin()],
   data() {
     return {}
-  },
+  }, 
   methods: {
     load() {
       if (!this.item.isCopied) {
@@ -40,7 +41,8 @@ export default {
 .drag-item {
   user-select: none;
   img {
-    /* drag */
+    width:100%;
+    height:100%
   }
 }
 </style>

@@ -30,33 +30,31 @@
       v-show="item.visible"
       :key="item.id"
       :item="item"
-    />
+    /> 
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from '../poster.vuex'
-import widgetContainer from './widgets/widgetContainer'
-import backgroundWidget from './widgets/backgroundWidget'
+import widgetContainer from './widgets/widgetContainer' 
 import drawRectWidget from './assistWidgets/drawRectWidget'
-import layoutWidget from './widgets/layoutWidget'
+import layoutWidget from './widgets/layoutWidget' 
 import pictureCarouselWidget from './widgets/pictureCarouselWidget'
 import textCarouselWidget from './widgets/textCarouselWidget'
 import pilotlampWidget from './widgets/pilotlampWidget'
-import TableWidget from './widgets/tableWidget'
-import straightlineWidget from './widgets/straightlineWidget'
-
+import tableWidget from './widgets/tableWidget'
+import straightlineWidget from './widgets/straightlineWidget' 
+ 
 export default {
   components: {
-    widgetContainer,
-    backgroundWidget,
+    widgetContainer, 
     drawRectWidget,
-    layoutWidget,
+    layoutWidget, 
     pictureCarouselWidget,
     textCarouselWidget,
     pilotlampWidget,
-    TableWidget,
-    straightlineWidget
+    tableWidget,
+    straightlineWidget, 
   },
   data() {
     return {}

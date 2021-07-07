@@ -3,6 +3,7 @@
     <div ref="mainPanelScrollContent" class="main-panel-scroll-content">
       <div class="main-panel-contaienr">
         <main-panel ref="mainPanel" @openContextmenu="openContextmenu" />
+         <Footer /> 
       </div>
     </div>
     <!-- <div class="mask" :style="maskStyle" /> -->
@@ -17,6 +18,7 @@
       :menu-list="menuList"
       @executeCommand="executeContextCommand"
     />
+   
   </div>
 </template>
 
@@ -34,13 +36,15 @@ import functionalBar from './functionalBar'
 import BScroll from '@better-scroll/core'
 import MouseWheel from '@better-scroll/mouse-wheel'
 import ScrollBar from '@better-scroll/scroll-bar'
+import Footer from 'poster/components/footer'
 export default {
   components: { 
     mainPanel,
     rulerComponent,
     bottomBar,
     customContextmenu,
-    functionalBar
+    functionalBar,
+    Footer
   },
   directives: { clickoutside },
   data() {

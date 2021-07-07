@@ -3,9 +3,7 @@ import _merge from 'lodash/merge'
 import { createHtmlStr } from 'poster/utils'
 
 function codeGen(config) {
-  const style = config.wState.style
-  console.log(config.dragInfo)
-  console.log(Widget.getPositionStyle(config.dragInfo))
+  const style = config.wState.style  
   return createHtmlStr({
     tag: 'div',
     style: {
@@ -40,7 +38,8 @@ export default class RectWidget extends Widget {
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
           borderBottomLeftRadius: 0,
-          borderBottomRightRadius: 0
+          borderBottomRightRadius: 0,
+          opacity: 1,
         }
       }
     }, config)

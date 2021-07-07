@@ -1,7 +1,7 @@
 <template>
-  <div class="poster_editor_control poster-editor_deactivated-ignore">
+  <div class="poster_editor_control poster-editor_deactivated-ignore" :class="{collapse: isCollapse}">
     <div class="tabs">
-      <i class="iconfont">&#xe6c1;</i>
+      <i class="iconfont" :class="{rotate_180: !isCollapse}" @click="isCollapse = !isCollapse">&#xe6c1;</i>
       <span class="active">样式</span>
       <span>事件</span>
       <span>数据源</span>
@@ -11,7 +11,6 @@
        <widget-composition-control />
     </div>
     <portal-target name="widgetControl" class="control_target" />
-   
   </div>
 </template>
 
@@ -20,13 +19,22 @@ import widgetCompositionControl from './widgets/widgetCompositionControl'
 export default {
   components: { widgetCompositionControl },
   data() {
-    return {}
+    return {
+      isCollapse: false
+    }
   },
   methods: {}
 }
 </script>
 <style lang="scss" scoped>
 .poster_editor_control {
+  transition: all 0.2s;
+  &.collapse {
+    width: 50px;
+    .tabs span {
+      display: none;
+    }
+  }
   .tabs,
   .alignment {
     @include tabs;

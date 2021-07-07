@@ -20,10 +20,11 @@ function codeGen(config) {
 }
 
 const style = {
-  borderColor: '#409EFF',
+  borderColor: '#eee',
   borderWidth: 1, // px
   borderStyle: 'solid',
   backgroundColor: '', 
+  opacity: 1,
 }
 
 // 文本Widget

@@ -1,6 +1,6 @@
 import { settingContent, settingItem, settingRow, radioGroup } from 'poster/commonUI'
 import positionControl from './positionControl'
-import { mapActions } from 'poster/poster.vuex'
+import { mapActions, mapState } from 'poster/poster.vuex' 
 export const commonMixin = {
   components: {
     settingContent,
@@ -18,13 +18,23 @@ export const commonMixin = {
     }
   },
   computed: {
+    ...mapState(['gridIndex']),
     dragInfo() {
       return this.item.dragInfo
     },
     wState() {
       return this.item.wState
     },
+    sindex() {
+      if(this.item.componentName == "layout-widget") {
+        return this.gridIndex
+      }
+      return -1
+    },
     style() {
+      if(this.item.componentName == "layout-widget") {
+        return this.wState.style[this.gridIndex]
+      }
       return this.wState.style
     }
   },

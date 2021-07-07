@@ -13,7 +13,7 @@ export default class DrawRectWidget extends Widget {
             visible: true,
             layerPanelVisible: false,
             replicable: false,
-            couldAddToActive: false
+            couldAddToActive: false,
         }, config)
         super(config)
         this.drawing = true

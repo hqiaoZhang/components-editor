@@ -1,48 +1,37 @@
 <template>
-  <div class="left_side">
+  <div class="left_side" :class="{collapse: isCollapse}">
     <div class="tabs">
       <span :class="{active:  activeName == 'components'}" @click="activeName = 'components'">组件</span>
       <span :class="{active:  activeName == 'layers'}" @click="activeName = 'layers'">图层</span>
-       <i class="iconfont fr">&#xe6c1;</i>
+       <i class="iconfont fr" :class="{rotate_180: isCollapse}" @click="isCollapse = !isCollapse">&#xe6c1;</i>
     </div>
 
     <div class="layer_list" v-if="activeName == 'layers'">
       <layer-panel/>
     </div>
     <div class="component_list" v-if="activeName == 'components'">
-      <ul class="widget_list" v-if="!current">
-        <li v-for="item in widgets" :key="item.type" class="widget_item" @click="current = item"> 
+      <ul class="widget_list" v-if="!current || isCollapse">
+        <li v-for="item in widgets" :key="item.type" class="widget_item" @click="current = item" :class="{active: current && item.type == current.type}"> 
           <i class="iconfont" v-html="item.icon" /> 
-          {{item.name}}
+          <span>{{item.name}}</span>
         </li>
       </ul> 
 
-       <div v-if="current" class="widget_container">
+       <div v-else-if="current && !isCollapse" class="widget_container">
           <p class="back" @click="handleBack"><i class="iconfont">&#xe60a;</i> {{current.name}}</p>
           <div  v-for="item in componentsList" :key="item.type">
             <p class="name"><i class="iconfont" v-html="item.icon"></i>{{item.name}}</p>
             <component :is="'basics-widget'" :key="item.component" :components="item.children" :componentType="item.type" />
           </div>  
           </div>
-    </div>
- 
-   
+    </div> 
   </div>
 </template>
 
 <script>
-import { mapActions } from "poster/poster.vuex";
-import { BackgroundWidget } from "poster/widgetConstructor";
-import imageWidget from "./widgets/imageWidget";
-import layerPanel from 'poster/extendSideBar/layerPanel'
-import backgroundWidget from "./widgets/backgroundWidget";
-import textWidget from "./widgets/textWidget";
-import rectWidget from "./widgets/rectWidget";
-import layoutWidget from './widgets/layoutWidget'
-import carouselWidget from './widgets/carouselWidget'
+import { mapActions } from "poster/poster.vuex"; 
 import basicsWidget from './widgets/basicsWidget'
-import pilotlampWidget from './widgets/pilotlampWidget'
-import commonWidget from './widgets/commonWidget'
+import layerPanel from 'poster/extendSideBar/layerPanel'
 import componentsList from './data'
 
 export default {
@@ -50,6 +39,7 @@ export default {
   data() {
     return {
       activeName: 'components', 
+      isCollapse: false,
       current: null,
       widgets: [
         {
@@ -74,15 +64,7 @@ export default {
   },
   components: {
     layerPanel,
-    basicsWidget,
-    imageWidget,
-    backgroundWidget,
-    textWidget,
-    rectWidget,
-    layoutWidget,
-    carouselWidget,
-    pilotlampWidget,
-    commonWidget
+    basicsWidget, 
   },
   computed: {
     componentsList() {
@@ -90,23 +72,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["addBackground"]),
-    init() {
-      this.addBackground(
-        new BackgroundWidget({
-          backgroundColor: "#fff",
-          isSolid: true,
-          lock: true
-        })
-      );
-    },
+    ...mapActions(["addBackground"]), 
     handleBack() {
       this.current = null
     }
   },
   created() {
     this.current = this.widgets[0];
-    this.init();
   }
 };
 </script>
@@ -117,9 +89,19 @@ export default {
   box-sizing: border-box;
   border-right: 2px solid $bodyBg;
   display: flex;
-  width: 256px;
- 
+  width: 256px; 
   flex-direction: column;
+  transition: all 0.2s;
+  padding-bottom: 8px;
+  &.collapse {
+    width: 50px;
+    .widget_item,
+    .tabs {
+      span {
+        display: none;
+      }
+    } 
+  }
   .tabs {
     @include tabs; 
   }
@@ -137,6 +119,7 @@ export default {
       line-height: 40px;
        padding: 0 16px;
        color: #000;
+       &.active,
       &:hover {
         cursor: pointer;
         background: rgba(29, 132, 239, 0.1);
@@ -160,6 +143,8 @@ export default {
     }
     i {
       padding-right: 8px;
+      color: #666;
+      font-size: 14px;
     }
     .name {
       padding: 16px;

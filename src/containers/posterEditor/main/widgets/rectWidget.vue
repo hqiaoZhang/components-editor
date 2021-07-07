@@ -2,18 +2,18 @@
   <div class="rect-widget" :style="rectStyleFilter">
     <!-- {{ isActive }} -->
     <portal v-if="isActive" :to="$data.$controlTarget">
-      <rect-control :key="item.id" :item="item" />
+      <common-control :key="item.id" :item="item" />
     </portal>
   </div>
 </template>
 
 <script>
-import rectControl from 'poster/control/widgets/rectControl'
-import { RectWidget } from 'poster/widgetConstructor'
+import commonControl from 'poster/control/widgets/commonControl'
+import { CommonWidget } from 'poster/widgetConstructor'
 // import { mapGetters, mapActions } from 'poster/poster.vuex'
 export default {
-  components: { rectControl },
-  mixins: [RectWidget.widgetMixin()],
+  components: { commonControl },
+  mixins: [CommonWidget.widgetMixin()],
   data() {
     return {}
   },

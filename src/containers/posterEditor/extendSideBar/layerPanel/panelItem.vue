@@ -116,15 +116,16 @@ export default {
   align-items: center;
   @include no-wrap;
   font-size: 14px;
-  background-color: #252930;
-  border-bottom: 1px solid #1d2024;
+  
+  border-bottom: 1px solid #eee;
   cursor: pointer;
   /* transition: 0.2s; */
   color: #9099a4;
   border-left: 2px solid transparent;
   &:hover {
-    background-color: #404955;
-    color: #fff;
+   cursor: pointer;
+  background: rgba(29, 132, 239, 0.1);
+  color: $main_c1;
     .handle {
       .remove {
         display: initial !important;
@@ -149,7 +150,7 @@ export default {
       margin-left: 4px;
     }
     .el-icon-lock {
-      color: #fff;
+       opacity: 0.4;
     }
     .el-icon-view {
       position: relative;

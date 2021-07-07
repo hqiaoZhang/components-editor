@@ -48,7 +48,7 @@
      </template>  
 
      <portal v-if="isActive" :to="$data.$controlTarget">
-      <layout-control :key="item.id" :item="item" />
+      <common-control :key="item.id" :item="item" />
     </portal>
      
    </div>
@@ -57,7 +57,7 @@
 <script> 
 import { mapMutations, mapState } from 'poster/poster.vuex'
 import { LayoutWidget } from 'poster/widgetConstructor'
-import layoutControl from 'poster/control/widgets/layoutControl' 
+import commonControl from 'poster/control/widgets/commonControl' 
 export default { 
   data() {
     return {
@@ -69,7 +69,7 @@ export default {
   },
   mixins: [LayoutWidget.widgetMixin()],
   components: {
-    layoutControl
+    commonControl
   },
   created() {  
     if (!this.item.isCopied) {
@@ -121,10 +121,10 @@ export default {
      .el-col {
         border: 1px dashed rgba(0,0,0,.5);
       &:last-child {
-        border-left: 0;
+        // border-left: 0;
       }
       &.active {
-        border:  1px dashed #ccc !important;
+        border:  1px dashed #1D84EF !important;
       }
       
       &.col-1 {

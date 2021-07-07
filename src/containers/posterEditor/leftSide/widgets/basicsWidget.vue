@@ -4,7 +4,9 @@
       class="add_text" 
       v-for="(item, i) in components"
       :key="i"  @click="handleAdd(item)">
-        <i class="iconfont" v-html="item.icon"></i> {{item.name}}
+        <i class="iconfont" v-if="item.icon" v-html="item.icon"></i> 
+        <img v-else :src="`static/images/components/${item.type}.png`" />
+        {{item.name}}
       </div> 
     <input ref="input" type="file" style="display:none" @change="selectImg">
   </div>
@@ -12,11 +14,16 @@
 
 <script>
 import { mapActions } from 'poster/poster.vuex'
-import { DrawRectWidget, ImageWidget, CommonWidget, LayoutWidget } from 'poster/widgetConstructor'
+import { DrawRectWidget, CommonWidget, LayoutWidget } from 'poster/widgetConstructor'
 import { validateImage } from '@/utils/imageHelpers'
 import { uploadActivityImgAssets } from '@/api/activity'
 
 export default { 
+  data() {
+    return {
+      config: {}
+    }
+  },
   props: {
     components: Array,
     componentType: String
@@ -27,18 +34,19 @@ export default {
     handleAdd(item) { 
       let config = {
         ...item,
-        componentName: item.componentName ||  item.component ||  item.type + '-widget',
+        componentName: item.componentName || item.type + '-widget',
         // componentName: this.componentType + '-widget',
         typeLabel: item.name
       } 
+      this.config = config
       if(this.componentType == 'layout') {
         return this.addItem(new LayoutWidget(item)) 
       }
       switch(item.type) { 
         case 'rect':
-           this.addAssistWidget(new DrawRectWidget())
+           this.addAssistWidget(new DrawRectWidget(config))
           break  
-        case 'img':
+        case 'image':
           this.selectImgHandler()
           break   
         default: 
@@ -64,7 +72,13 @@ export default {
       }
     },
     addImage({ src }) {
-      this.addItem(new ImageWidget({ wState: { src }}))
+      let config = {
+        ...this.config,
+        wState: {
+          src
+        }
+      } 
+      this.addItem(new CommonWidget(config))
     }
   }
 }
@@ -81,6 +95,17 @@ export default {
     padding-left: 40px;
     color: #000;
     cursor: pointer;
+    img {
+      width: 24px;
+      height: 24px;  
+      background: #eeeeee;
+      margin-right: 8px;
+      image-rendering:-moz-crisp-edges;
+    image-rendering:-o-crisp-edges;
+    image-rendering:-webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode:nearest-neighbor; 
+    }
   }
   i {
    width: 24px;
@@ -88,6 +113,7 @@ export default {
     background: #eeeeee;
     border-radius: 1px;
     color: $main_c1;
+    font-size: 16px;
     line-height: 23px;
     text-align: center;
     display: inline-block;

@@ -9,8 +9,8 @@
         :title="item.label"
         @click="select(item)"
       >
-        <slot :name="item.value">
-          <i class="iconfont" v-if="item.icon" v-html="item.icon"></i> 
+        <slot :name="item.value"> 
+          <i class="iconfont" v-if="item.icon" v-html="item.icon"></i>  
           <span v-else>{{ item.label }}</span>
         </slot>
       </li>

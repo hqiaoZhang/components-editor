@@ -1,9 +1,9 @@
-import { ImageWidget, TextWidget, BackgroundWidget, RectWidget, LayoutWidget } from './index'
+import { BackgroundWidget, RectWidget, LayoutWidget, CommonWidget } from './index'
 
 export default {
-    image: ImageWidget,
-    text: TextWidget,
+    image: CommonWidget,
+    text: CommonWidget,
     background: BackgroundWidget,
-    rect: RectWidget,
+    rect: CommonWidget,
     layout: LayoutWidget
 }

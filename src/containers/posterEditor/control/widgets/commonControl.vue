@@ -14,7 +14,7 @@
         </template>
         <setting-content>
           <setting-item label="透明度"> 
-            <el-slider v-model="inOpacity" style="width: 100%"></el-slider>
+            <el-slider show-input v-model="style.opacity" :max="1" :step="0.1" style="width: 100%"></el-slider>
           </setting-item>
 
           <setting-item label="填充">
@@ -53,13 +53,13 @@
            </setting-item>
 
            <setting-item label="阴影">
-            <el-color-picker v-model="inBackgroundColor" size="mini" />
-            <el-input v-model="inBackgroundColor" ></el-input> 
+            <el-color-picker v-model="inBoxshadow" size="mini" />
+            <el-input v-model="inBoxshadow" ></el-input> 
           </setting-item> 
         </setting-content>
       </el-collapse-item> 
 
-      <el-collapse-item name="text">
+      <el-collapse-item name="text" v-if="item.type == 'text'">
         <template #title>
           <div class="header">文本</div>
         </template>
@@ -93,29 +93,31 @@
           </el-row>
           <el-row class="font_spacing">
             <el-col :span="8">
-                <el-tooltip content="行间距" placement="top">
-                  <i class="iconfont">&#xe6f4;</i>
-                </el-tooltip>
+                <i class="iconfont" title="行间距">&#xe6f4;</i>
                 <input v-model.number="inLineHeight" type="number">
             </el-col>
-            <el-col :span="8">
-               <el-tooltip content="字符间距" placement="top">
-                  <i class="iconfont">&#xe6fb;</i>
-                </el-tooltip> 
+            <el-col :span="8"> 
+                <i title="字符间距" class="iconfont">&#xe6fb;</i> 
                 <input v-model.number="inLetterSpacing" type="number">
             </el-col>
             <el-col :span="8">
-              <el-tooltip content="段落间距" placement="top">
-                   <i class="iconfont">&#xe7c4;</i>
-              </el-tooltip>  
+                <i title="段落间距" class="iconfont">&#xe7c4;</i>
                 <input v-model.number="inLetterSpacing" type="number">
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="10">
-              <i class="iconfont" v-html="'&#xe6fc;'" />
-              <i class="iconfont" v-html="'&#xe6f0;'" />
-              <i class="iconfont" v-html="'&#xe6fa;'" />
+              <radio-group v-model="inTextAlign" :list="textAlignList">
+                <template #left>
+                  <i class="iconfont" v-html="'&#xe6fc;'" />
+                </template>
+                <template #center>
+                  <i class="iconfont" v-html="'&#xe6f0;'" />
+                </template>
+                <template #right>
+                  <i class="iconfont" v-html="'&#xe6fa;'" />
+                </template>
+              </radio-group> 
             </el-col>
             <el-col :span="4">&nbsp;</el-col>
             <el-col :span="10"> 
@@ -126,33 +128,13 @@
           </el-row>
           <el-row>
             <el-col>
-              <el-tooltip content="大写" placement="top">
-                <i class="iconfont">&#xe6ee;</i>
-              </el-tooltip>
-
-              <el-tooltip content="小写" placement="top">
-                <i class="iconfont">&#xe6f7;</i>
-              </el-tooltip>
-
-              <el-tooltip content="词首大写" placement="top">
-                <i class="iconfont">&#xe6ed;</i>
-              </el-tooltip>
-
-              <el-tooltip content="上标" placement="top">
-                <i class="iconfont">&#xe6f3;</i>
-              </el-tooltip>
-
-               <el-tooltip content="下标" placement="top">
-                <i class="iconfont">&#xe6f6;</i>
-              </el-tooltip>
-
-               <el-tooltip content="下划线" placement="top">
-                <i class="iconfont">&#xe6f9;</i>
-              </el-tooltip>
-
-              <el-tooltip content="删除线" placement="top">
-                <i class="iconfont">&#xe6f8;</i>
-              </el-tooltip> 
+              <i title="大写" class="iconfont">&#xe6ee;</i> 
+              <i title="小写" class="iconfont">&#xe6f7;</i> 
+              <i title="词首大写" class="iconfont">&#xe6ed;</i> 
+              <i title="上标" class="iconfont">&#xe6f3;</i>
+              <i title="下标" class="iconfont">&#xe6f6;</i>
+              <i title="下划线" class="iconfont">&#xe6f9;</i>
+              <i title="删除线" class="iconfont">&#xe6f8;</i> 
             </el-col>
           </el-row>  
         </setting-content>
@@ -211,17 +193,17 @@ export default {
       inOpacity:  50,
     }
   },
-  mounted() {
-    console.log(this)
-  },
+ 
   computed: {
     ...mapState(['gridIndex']),
+    // 边框颜色或文字边框
+    
     inBorderColor: {
       get() {
         return this.style.borderColor
       },
       set(val) {
-        this.updateStyle('borderColor', val)
+        this.updateStyle('borderColor', val, this.sindex)
       }
     },
     inBorderWidth: {
@@ -229,7 +211,7 @@ export default {
         return parseInt(this.style.borderWidth)
       },
       set(val) {
-        this.updateStyle('borderWidth', val + 'px')
+        this.updateStyle('borderWidth', val + 'px', this.sindex)
       }
     },
     inBorderStyle: {
@@ -240,12 +222,19 @@ export default {
         this.updateStyle('borderStyle', val)
       }
     },
+    // 背景颜色，或文字颜色
     inBackgroundColor: {
       get() {
+        if(this.item.type == 'text') {
+          return this.style.color
+        }
         return this.style.backgroundColor
       },
       set(val) { 
-        this.updateStyle('backgroundColor', val)
+        if(this.item.type == 'text') {
+          return this.updateStyle('color', val)
+        }
+        this.updateStyle('backgroundColor', val, this.sindex)
       }
     },
     infontFamily: {
@@ -255,15 +244,7 @@ export default {
       set(val) {
         this.updateStyle('fontFamily', val)
       }
-    },
-    // inOpacity: {
-    //   get() {
-    //     return this.style.opacity
-    //   },
-    //   set(val) {
-    //     this.updateStyle('opacity', val)
-    //   }
-    // },
+    }, 
     inColor: {
       get() {
         return this.style.color
@@ -313,6 +294,14 @@ export default {
         this.updateStyle('textAlign', val)
       }
     },  
+    inBoxshadow: { 
+      get() {
+        return this.style.boxShadow
+      },
+      set(val) {
+        this.updateStyle('boxShadow', val)
+      }
+    },
     inBoxSizing: {
       get() {
         return this.style.boxSizing
@@ -357,9 +346,11 @@ export default {
       }
     }
   },
-  methods: {
-     
-  }
+  watch: {
+    gridIndex(i) {
+      console.log('xxxxxxxxxx', i)
+    }
+  } 
 }
 </script>
 <style lang="scss" scoped>
@@ -394,6 +385,20 @@ export default {
      .content .el-input__inner {
        height: 24px !important;
        line-height: 24px;
+       color: #000;
+    }
+    .el-slider__runway.show-input {
+      margin-right: 32px;
+    }
+    .el-slider__input {
+      width: 35px;
+      .el-input-number__decrease,
+      .el-input-number__increase  {
+        display: none;
+      }
+      .el-input__inner {
+        width: 35px;
+      }
     }
     .text_content {
       .el-select {

@@ -1,9 +1,5 @@
 <template>
-  <div id="layer-panel" class="layer-panel poster-editor_deactivated-ignore">
-    <div v-drag:#layer-panel class="header">
-      <!-- <div class="title">图层面板</div> -->
-      <i class="el-icon-close" @click="close" />
-    </div>
+  <div id="layer-panel" class="layer-panel poster-editor_deactivated-ignore"> 
     <div class="content">
       <el-scrollbar
         ref="scrollContainer"
@@ -102,8 +98,7 @@ export default {
   .content {
     width: 100%;
     flex: 1;
-    /* overflow-y: scroll; */
-    background-color: #1d2024;
+    /* overflow-y: scroll; */ 
     .draggable-container {
       height: 100%;
     }
@@ -116,8 +111,8 @@ export default {
     }
   }
   .panel-item.selected {
-    background-color: #404955;
-    color: #fff;
+     background: rgba(29, 132, 239, 0.1);
+  color: $main_c1;
     border-left-color: #358dd9;
   }
 }

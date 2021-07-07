@@ -4,7 +4,7 @@
  * @Email: 991034150@qq.com 
  * @Description: 预览
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2021-07-05 14:15:56
+ * @Last Modified time: 2021-07-07 16:48:21
  */
 
 <template>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import Header from '@/components/header'
 import { mapState, mapGetters, mapActions } from 'poster/poster.vuex'
  
 import mainComponent from 'poster/main/mainPanel' 
@@ -24,7 +25,7 @@ import posterModule from 'poster/vuexModule/poster'
  
 
 export default {
-  components: { 
+  components: {  
     mainComponent, 
   },
   data() {
