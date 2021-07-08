@@ -38,6 +38,24 @@ function rectCodeGen(config) {
 }
 
 
+function backgroundCodeGen(config) {
+  const node = {
+    style: {
+      ...config.wState.style,
+      ...Widget.getPositionStyle(config.dragInfo)
+    }
+  }
+  if (config.wState.isSolid) {
+    node.tag = 'div'
+    node.style.backgroundColor = config.wState.style.backgroundColor
+  } else {
+    node.tag = 'image'
+    node.attrs = { src: config.wState.src }
+  }
+  return createHtmlStr(node)
+}
+
+
 // 文本Widget
 export default class CommonWidget extends Widget {
   constructor(config) {
@@ -63,7 +81,7 @@ export default class CommonWidget extends Widget {
           borderStyle: 'solid',
           lineHeight: '100%', // %
           letterSpacing: 0, // %
-          backgroundColor: '#eee', 
+          backgroundColor: '', 
           fontStyle: '',
           textDecoration: '',
           boxSizing: 'border-box',
@@ -72,6 +90,7 @@ export default class CommonWidget extends Widget {
           fontWeight: 'Regular',
           textShadow: '',
           boxShadow: '',
+          boxShadowColor: '',
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
           borderBottomLeftRadius: 0,
@@ -79,9 +98,8 @@ export default class CommonWidget extends Widget {
         }
       }
     }, config)
-    console.log(config)
     super(config)
-    this._codeGen = codeGen
-    
+    this._codeGen = backgroundCodeGen 
   }
 }
+ 

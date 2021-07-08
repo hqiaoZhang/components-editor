@@ -23,7 +23,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['isUnsavedState', 'posterItems'])
+    ...mapState(['isUnsavedState', 'posterItems', 'background'])
   },
   methods: {
     ...mapActions(['saveActivityPageConfig']),
@@ -40,7 +40,8 @@ export default {
         return
       }
       this.savePageLoading = true
-         sessionStorage.setItem('posterItems', JSON.stringify(this.posterItems))
+      sessionStorage.setItem('posterItems', JSON.stringify(this.posterItems))
+      sessionStorage.setItem('bodyBackground', this.background.wState.style.backgroundColor)
       this.saveActivityPageConfig().finally(() => {
         this.savePageLoading = false
       })

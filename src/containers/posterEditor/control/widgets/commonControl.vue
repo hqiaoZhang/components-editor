@@ -1,7 +1,7 @@
 <template>
   <div class="layout-control">
-    <el-collapse v-model="activeNames">
-       <el-collapse-item name="position">
+    <el-collapse v-model="activeNames" >
+       <el-collapse-item name="position" v-if="item.type != 'background'">
         <template #title>
           <div class="header">变换</div>
         </template>
@@ -56,6 +56,21 @@
             <el-color-picker v-model="inBoxshadow" size="mini" />
             <el-input v-model="inBoxshadow" ></el-input> 
           </setting-item> 
+
+          <div class="border_radius">
+            <div class="radius">
+              <span :class="{active: activeRadius == 'all'}" @click="handleRadius('all')"></span>
+              <i class="iconfont" :class="{active: activeRadius == 'mult'}" @click="handleRadius('mult')">&#xe639;</i>
+            </div>
+            <div class="content inputs">
+              <el-input v-model="inBorderTopLeftRadius"></el-input> 
+              <template v-if="activeRadius == 'mult'">
+                <el-input v-model="inBorderTopRightRadius" type="number"></el-input>
+                <el-input v-model="inBorderBottomLeftRadius" type="number"></el-input>
+                <el-input v-model="inBorderBottomRightRadius" type="number"></el-input>
+              </template>
+            </div>
+          </div>  
         </setting-content>
       </el-collapse-item> 
 
@@ -144,7 +159,9 @@
           <div class="header">背景</div>
         </template>
         <setting-content class="background_fill">  
-          <div class="img" v-for="i in 9" :key="i"></div>
+          <div class="img" v-for="i in 9" :key="i">
+            <img src="static/images/background/1.jpg" />
+          </div>
         </setting-content>
        </el-collapse-item>
     </el-collapse>
@@ -189,9 +206,12 @@ export default {
         {label: '粗体', value: 'bold'},
         {label: '正常', value: 'normal'},
       ],
-      borderRadiusInit: {},
-      inOpacity:  50,
+      borderRadiusInit: {}, 
+      activeRadius: 'all',
     }
+  },
+  mounted() {
+    console.log(this.item)
   },
  
   computed: {
@@ -294,12 +314,21 @@ export default {
         this.updateStyle('textAlign', val)
       }
     },  
-    inBoxshadow: { 
-      get() {
-        return this.style.boxShadow
+    inBoxshadowColor: {
+       get() {
+        return this.style.boxShadowColor
       },
       set(val) {
-        this.updateStyle('boxShadow', val)
+        this.updateStyle('boxShadow', `1px 1px 5px ${val}`)
+      }
+    },
+    inBoxshadow: { 
+      get() {
+        return this.style.boxShadowColor
+      },
+      set(val) {
+        // console.log('====', val)
+        this.updateStyle('boxShadow', `1px 1px 5px ${val}`)
       }
     },
     inBoxSizing: {
@@ -344,13 +373,67 @@ export default {
           this.updateStyle('textDecoration', newValue)
         }
       }
+    },
+    inBorderTopLeftRadius: {
+      get() {
+        return parseInt(this.style.borderTopLeftRadius)
+      },
+      set(val) {
+        // 如果是全部同时设置4个角
+        if(this.activeRadius == 'all') {
+          this.updateStyle('borderTopLeftRadius', val + '%', false)
+          this.updateStyle('borderTopRightRadius', val + '%', false)
+          this.updateStyle('borderBottomLeftRadius', val + '%', false)
+          this.updateStyle('borderBottomRightRadius', val + '%', false)
+        }else {
+          this.updateStyle('borderTopLeftRadius', val + '%', false /** no pushHistory */)
+        }
+        
+      }
+    },
+    inBorderTopRightRadius: {
+      get() {
+        return parseInt(this.style.borderTopRightRadius)
+      },
+      set(val) {
+        this.updateStyle(
+          'borderTopRightRadius',
+          val + '%',
+          false /** no pushHistory */
+        )
+      }
+    },
+    inBorderBottomLeftRadius: {
+      get() {
+        return parseInt(this.style.borderBottomLeftRadius)
+      },
+      set(val) {
+        this.updateStyle(
+          'borderBottomLeftRadius',
+          val + '%',
+          false /** no pushHistory */
+        )
+      }
+    },
+    inBorderBottomRightRadius: {
+      get() {
+        return parseInt(this.style.borderBottomRightRadius)
+      },
+      set(val) {
+        this.updateStyle(
+          'borderBottomRightRadius',
+          val + '%',
+          false /** no pushHistory */
+        )
+      }
     }
   },
-  watch: {
-    gridIndex(i) {
-      console.log('xxxxxxxxxx', i)
+  methods: {
+    handleRadius(type) {
+      this.activeRadius = type
+      console.log('type', type)
     }
-  } 
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -374,9 +457,83 @@ export default {
     margin-right: 8px;
     background: #eee;
     margin-bottom: 8px;
+    overflow: hidden;
+    border: 1px solid transparent;
     &:nth-child(3n) {
       margin-right: 0;
     }
+    &:hover {
+      border: 1px solid #1D84EF;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      transition: all 0.2s;
+      // image-rendering:-moz-crisp-edges;
+      // image-rendering:-o-crisp-edges;
+      // image-rendering:-webkit-optimize-contrast;
+      // image-rendering: crisp-edges;
+      // -ms-interpolation-mode:nearest-neighbor; 
+      &:hover {
+        
+        transform: scale(1.2);
+      }
+    }
+  }
+  .border_radius {
+     margin-bottom: 8px;
+     display: flex;
+    .radius {
+      border: 1px solid #ddd;
+      width: 48px;
+      height: 24px;
+      border-radius: 2px; 
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      i {
+        font-size: 14px;
+        cursor: pointer;
+        color: #999;
+      }
+      span.active {
+        border: 1px solid #1D84EF; 
+      }
+      i.active {
+        color: #1D84EF;
+      }
+    }
+    .inputs {
+      flex: 1; 
+      display: flex; 
+      .el-input {
+        margin-left: 8px; 
+      }  
+      ::v-deep {
+        input { 
+          border-color: transparent; 
+        }
+        input:focus {
+          border-color: $colorTheme;
+        }
+      }
+    }
+    span {
+      width: 14px;
+      height: 14px;
+      border: 1px solid #999;
+      border-radius: 4px;
+      cursor: pointer;
+      display: block;
+      &:last-child {
+        border-style: dashed;
+      }
+      &.active,
+      &:hover {
+        border-color: #1D84EF;
+      } 
+    } 
   }
   .font_spacing i {
     margin-right: 12px;

@@ -26,8 +26,7 @@
           </div>
     </div> 
   </div>
-</template>
-
+</template> 
 <script>
 import { mapActions } from "poster/poster.vuex"; 
 import basicsWidget from './widgets/basicsWidget'

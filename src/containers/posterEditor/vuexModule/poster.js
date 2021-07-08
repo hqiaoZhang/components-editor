@@ -34,6 +34,7 @@ function getState() {
       left: null
     },
     background: null,
+    
     posterItems: posterItems, // 组件列表
     activeItems: [], // 当前选中的组件
     assistWidgets: [], // 辅助组件
@@ -240,6 +241,7 @@ const actions = {
       dispatch("history/push");
     }
     commit(MTS.ADD_BACKGROUND, item);
+    // commit(MTS.ADD_ITEM, item);
   },
   removeBackground({ commit, dispatch }) {
     dispatch("history/push");
@@ -373,6 +375,10 @@ const actions = {
     { keyPath, value, widgetId, pushHistory = true, index = -1 }
   ) {
     const widgetItem = state.posterItems.find(i => i.id === widgetId); 
+     if(!widgetItem) {
+       let background = state.background 
+       return _set(background.wState, keyPath, value) 
+     }
     if (widgetItem) {
       // 某些操作不添加进历史记录栈
       if (pushHistory) {
@@ -534,7 +540,7 @@ const actions = {
       }),
       items: [
         {
-          type: state.background.type,
+          // type: state.background.type,
           content: "",
           config: JSON.stringify(state.background)
         },

@@ -7,8 +7,6 @@
     }"
     @mousedown.prevent.stop=""
   >
-    <!-- marginLeft: -canvasSize.width / 2 + 'px' -->
-
     <background-widget
       v-if="background"
       :key="background.id"
@@ -35,7 +33,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from '../poster.vuex'
+import { mapState, mapMutations, mapActions } from '../poster.vuex'
 import widgetContainer from './widgets/widgetContainer' 
 import drawRectWidget from './assistWidgets/drawRectWidget'
 import layoutWidget from './widgets/layoutWidget' 
@@ -44,9 +42,11 @@ import textCarouselWidget from './widgets/textCarouselWidget'
 import pilotlampWidget from './widgets/pilotlampWidget'
 import tableWidget from './widgets/tableWidget'
 import straightlineWidget from './widgets/straightlineWidget' 
- 
+ import backgroundWidget from './widgets/backgroundWidget'
+ import { BackgroundWidget, CommonWidget } from 'poster/widgetConstructor'
 export default {
   components: {
+    backgroundWidget,
     widgetContainer, 
     drawRectWidget,
     layoutWidget, 
@@ -66,8 +66,29 @@ export default {
       'background',
       'assistWidgets',
       'pageTitle'
-    ])
-
+    ]) 
+  },
+  mounted() {
+    this.initBackgroundColor()
+  },
+  methods: {
+    ...mapActions(['addBackground', 'addItem']),
+    // 初始化背景
+    initBackgroundColor() {
+      let commonConfig = new CommonWidget() 
+      this.addBackground(
+        new BackgroundWidget({
+          lock: true,
+          wState: { 
+            isSolid: true, 
+            style: {
+              ...commonConfig.wState.style, 
+              backgroundColor: sessionStorage.getItem('bodyBackground')
+            }
+          }
+        })
+      )
+    },
   }
 }
 </script>
